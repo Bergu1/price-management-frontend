@@ -1,0 +1,1 @@
+małe komponenty wspólne (przyciski, inputy)
