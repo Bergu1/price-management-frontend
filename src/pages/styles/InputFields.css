@@ -1,0 +1,26 @@
+.input {
+  margin-left: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 85%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.inputForm {
+  border: 1.5px solid #b3aeae;
+  border-radius: 10px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.inputForm:focus-within {
+  border: 1.5px solid #000000;
+}
