@@ -1,5 +1,6 @@
 import { useState } from "react";
-import './Login.css';
+import { Link } from 'react-router-dom';
+import '../styles/loginContainer.css'
 import '../styles/InputFields.css'
 import '../styles/Button.css'
 import '../styles/checkBox.css'
@@ -34,7 +35,10 @@ export default function Login() {
     <div className="login-container">
 
       <form onSubmit={handleSubmit} className="form">
+        {/* Inspired by Uiverse.io (by micaelgomestavares), customized by me */}
+
         <h2>Access your account</h2>
+
         {/* Email or Username */}
         <div className="flex-column">
           <label>Email or Username</label>
@@ -78,9 +82,10 @@ export default function Login() {
         {/* Remember + forgot */}
         <div className="flex-row">
 
-         {/* <!-- From Uiverse.io by cssbuttons-io -->  */}
+        {/* Inspired by Uiverse.io (by cssbuttons-io), customized by me */}
+        
         <div className="cntr">
-            <input type="checkbox" id="cbx" className="hidden-xs-up" />
+            <input type="checkbox" id="cbx" className="hidden-xs-up cbx-input" />
             <label htmlFor="cbx" className="cbx"></label>
             <label>Remember me</label>
         </div>
@@ -91,7 +96,7 @@ export default function Login() {
         <button type="submit" className="button-submit">Sign In</button>
 
         <p className="p">
-          Don't have an account? <span className="span">Sign Up</span>
+          Don't have an account? <Link to='/register' className="span">Sign Up</Link>
         </p>
       </form>
     </div>

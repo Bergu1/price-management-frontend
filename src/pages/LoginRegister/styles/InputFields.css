@@ -1,3 +1,5 @@
+/* Inspired by Uiverse.io (by micaelgomestavares), customized by me */
+
 .input {
   margin-left: 10px;
   border-radius: 10px;
@@ -14,7 +16,7 @@
 .inputForm {
   border: 1.5px solid #b3aeae;
   border-radius: 10px;
-  height: 50px;
+  height: 47px;
   display: flex;
   align-items: center;
   padding-left: 10px;
