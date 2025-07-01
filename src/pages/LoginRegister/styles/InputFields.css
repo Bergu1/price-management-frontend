@@ -11,6 +11,7 @@
 
 .input:focus {
   outline: none;
+  background-color: transparent;
 }
 
 .inputForm {
@@ -26,3 +27,11 @@
 .inputForm:focus-within {
   border: 1.5px solid #000000;
 }
+
+input:-webkit-autofill 
+{ 
+  height: 40px;
+  box-shadow: 0 0 0 1000px #e2e2e2 inset !important;
+  -webkit-text-fill-color: #000 !important;
+}
+

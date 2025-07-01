@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import AlertMessage from '../../AlertMessage/AlertMessage';
+
 import '../styles/loginContainer.css'
 import '../styles/InputFields.css'
 import '../styles/Button.css'
@@ -15,27 +18,85 @@ export default function Register() {
   const [isEmployee, setIsEmployee] = useState(false);
   const [employeeCode, setEmployeeCode] = useState('');
 
-  const handleSubmit = (e) => {
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+
+  const showMessage = (text, type = 'success') => {
+    setMessage(text);
+    setMessageType(type);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!firstName || !lastName || !email || !username || !password || !confirmPassword) {
-      alert('Please fill in all required fields.');
+      showMessage('Please fill in all required fields.', 'error');
       return;
     }
 
     if (password !== confirmPassword) {
-      alert('Passwords do not match.');
+      showMessage('Passwords do not match.', 'error');
+      setConfirmPassword('');
+      setPassword('');
+      return;
+    }
+
+    if (password.length < 8) {
+      showMessage("Password must be at least 8 characters long.", 'error');
+      setConfirmPassword('');
+      setPassword('');
       return;
     }
 
     if (isEmployee && !employeeCode) {
-      alert('Please enter your employee code.');
+      show('Please enter your employee code.', 'error');
       return;
     }
+
+    const dataToSend = {
+      email,          
+      username,         
+      first_name: firstName,  
+      last_name: lastName,    
+      password,
+      is_employee: isEmployee,
+      ...(isEmployee && { verification_code: employeeCode }),
+    };
+
+
+    try {
+        const response = await axios.post('http://localhost:8000/api/users/create/', dataToSend);
+        showMessage('Registration successful!', 'success');
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+
+        if (error.response && error.response.data) {
+          const data = error.response.data;
+          const firstErrorKey = Object.keys(data)[0];
+          const firstErrorMessage = Array.isArray(data[firstErrorKey])
+            ? data[firstErrorKey][0]
+            : data[firstErrorKey];
+          if (firstErrorKey === 'email' && firstErrorMessage.includes('already exists')) {
+            showMessage('User with this email is already registered.', 'error');
+          } else {
+            showMessage(firstErrorMessage, 'error');
+          }
+        } else {
+          showMessage('Registration failed. Please try again.', 'error');
+        }
+      }
   };
 
   return (
     <div className="login-container">
+
+      {message && (
+        <div className="mb-4">
+          <AlertMessage message={message} type={messageType} onClose={() => setMessage('')} />
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="form">
 
         {/* Inspired by Uiverse.io (by micaelgomestavares), customized by me */}

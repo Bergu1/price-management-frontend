@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import AlertMessage from '../../AlertMessage/AlertMessage';
 import '../styles/loginContainer.css'
 import '../styles/InputFields.css'
 import '../styles/Button.css'
@@ -9,30 +11,63 @@ export default function Login() {
     const [emailOrUsername, setEmailOrUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
+
+    const showMessage = (text, type = 'success') => {
+      setMessage(text);
+      setMessageType(type);
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!emailOrUsername || !password) {
-        alert('Please fill in all fields.');
-        return;
-        }
-
-        if (password.length < 6) {
-        alert("Password must be at least 6 characters long.");
-        return;
+          showMessage('Please fill in all fields.', 'error');
+          setEmailOrUsername('');
+          setPassword('');
+          return;
         }
 
         const isEmail = emailOrUsername.includes("@");
         const isLogin = emailOrUsername.length >= 3;
 
         if (!isEmail && !isLogin) {
-            alert("Please enter a valid email or username.");
+            showMessage("Please enter a valid email or username.", 'error');
+            setEmailOrUsername('');
+            setPassword('');
             return;
         }
+
+        const data = {
+          identifier: emailOrUsername,
+          password: password,
+        };
+
+        try {
+          const response = await axios.post('http://localhost:8000/api/users/token/', data);
+          const token = response.data.token;
+
+          localStorage.setItem('token', token);
+          showMessage('Login successful!', 'success');
+
+        } catch (error) {
+          console.error(error);
+          showMessage('Login failed. Check your data.', 'error');
+          setEmailOrUsername('');
+          setPassword('');
+        }
+        
     };
 
   return (
     <div className="login-container">
+    
+      {message && (
+        <div className="mb-4">
+          <AlertMessage message={message} type={messageType} onClose={() => setMessage('')} />
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="form">
         {/* Inspired by Uiverse.io (by micaelgomestavares), customized by me */}
