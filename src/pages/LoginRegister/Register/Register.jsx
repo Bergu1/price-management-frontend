@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AlertMessage from '../../AlertMessage/AlertMessage';
 
@@ -9,6 +9,7 @@ import '../styles/Button.css'
 import '../styles/checkBox.css'
 
 export default function Register() {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -67,6 +68,7 @@ export default function Register() {
     try {
         const response = await axios.post('http://localhost:8000/api/users/create/', dataToSend);
         showMessage('Registration successful!', 'success');
+        setTimeout(() => navigate('/login'), 1000);
         console.log(response.data);
       } catch (error) {
         console.error(error);

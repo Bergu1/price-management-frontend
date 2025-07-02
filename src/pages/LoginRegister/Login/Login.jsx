@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AlertMessage from '../../AlertMessage/AlertMessage';
 import '../styles/loginContainer.css'
@@ -8,6 +8,8 @@ import '../styles/Button.css'
 import '../styles/checkBox.css'
 
 export default function Login() {
+    const navigate = useNavigate();
+    
     const [emailOrUsername, setEmailOrUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -50,6 +52,7 @@ export default function Login() {
 
           localStorage.setItem('token', token);
           showMessage('Login successful!', 'success');
+          setTimeout(() => navigate('/homePage'), 1000);
 
         } catch (error) {
           console.error(error);
