@@ -9,9 +9,9 @@
 
 .product-card {
   width: 280px;
-  background: #8bd9f8;
+  background: #e4f7ff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   transition: transform 0.3s ease;
 }
