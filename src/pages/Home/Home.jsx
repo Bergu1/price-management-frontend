@@ -1,10 +1,16 @@
 import React from 'react';
+import GuestHome from './GuestHome';
+import CustomerHome from './CustomerHome';
+import EmployeeHome from './EmployeeHome';
 
 export default function Home() {
-  return (
-    <div className="homepage-container">
-      <h1>Welcome to the Home Page!</h1>
-      <p>You are successfully logged in.</p>
-    </div>
-  );
+  const token = localStorage.getItem('token');
+  const isEmployee = localStorage.getItem('is_employee') === 'true';
+  const username = localStorage.getItem('username');
+
+  if (!token) return <GuestHome />;
+
+  return isEmployee
+    ? <EmployeeHome username={username} />
+    : <CustomerHome username={username} />;
 }
