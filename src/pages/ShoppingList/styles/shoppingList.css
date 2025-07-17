@@ -43,3 +43,39 @@
   font-size: 1rem;
   color: #444;
 }
+
+.shopping-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: auto; 
+}
+
+.purchase-btn,
+.remove-btn {
+  padding: 5px 5px;
+  background-color: #e8ecf4;
+  color: #1a3e69;
+  border: 2px solid #b0bfd8;
+}
+
+.purchase-btn:hover,
+.remove-btn:hover {
+  background-color: #d9e2f1;
+  color: #0e2c4e;
+}
+
+.purchase-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.shopping-item.purchased {
+  opacity: 0.5;
+}
+
+.shopping-item.purchased .shopping-info h4,
+.shopping-item.purchased .shopping-info p {
+  text-decoration: line-through;
+}

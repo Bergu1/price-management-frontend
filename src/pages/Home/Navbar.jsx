@@ -1,10 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './styles/navbar.css';
 
+
 export default function Navbar({ token, isEmployee }) {
+  const navigate = useNavigate();
   let role = 'guest';
   if (token) role = isEmployee ? 'employee' : 'customer';
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('isEmployee');
+    navigate('/login');
+  };
+
 
   return (
     <nav>
@@ -45,6 +54,11 @@ export default function Navbar({ token, isEmployee }) {
                 <li><a href="#">Settings</a></li>
                 <li><a href="#">About us</a></li>
               </>
+            )}
+            {role !== 'guest' && (
+              <button className="logout-button" onClick={handleLogout}>
+                Log Out
+              </button>
             )}
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './styles/productsList.css';
+import AlertMessage from '../AlertMessage/AlertMessage';
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
@@ -18,6 +19,14 @@ export default function ProductList() {
       })
       .catch((err) => console.error('Error while loading product:', err));
   }, []);
+
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
+
+  const showMessage = (text, type = 'success') => {
+    setMessage(text);
+    setMessageType(type);
+  };
 
   const handleQuantityChange = (productId, delta) => {
     setQuantities((prev) => ({
@@ -46,16 +55,26 @@ export default function ProductList() {
       })
       .then((data) => {
         console.log('Product added to shopping list:', data);
-        alert(`Added ${quantity} × to shopping list!`);
+        showMessage(`Added ${quantity} × to shopping list!`, 'success');
       })
       .catch((err) => {
         console.error('Error:', err);
-        alert('Failed to add product to shopping list.');
+        showMessage('Failed to add product to shopping list.', 'error');
       });
   };
 
 
   return (
+    <div>
+    <div className="mb-4">
+      {message && (
+        <AlertMessage
+          message={message}
+          type={messageType}
+          onClose={() => setMessage('')}
+        />
+      )}
+    </div>
     <div className="product-list-rows">
       {products.length === 0 ? (
         <p>Loading products...</p>
@@ -88,6 +107,7 @@ export default function ProductList() {
           </div>
         ))
       )}
+    </div>
     </div>
   );
 }
