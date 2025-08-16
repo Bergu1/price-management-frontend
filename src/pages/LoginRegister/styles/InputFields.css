@@ -1,0 +1,37 @@
+/* Inspired by Uiverse.io (by micaelgomestavares), customized by me */
+
+.input {
+  margin-left: 10px;
+  border-radius: 10px;
+  border: none;
+  width: 85%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.input:focus {
+  outline: none;
+  background-color: transparent;
+}
+
+.inputForm {
+  border: 1.5px solid #b3aeae;
+  border-radius: 10px;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.inputForm:focus-within {
+  border: 1.5px solid #000000;
+}
+
+input:-webkit-autofill 
+{ 
+  height: 40px;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
