@@ -1,142 +1,185 @@
-.product-list-rows {
+/* Layout ogólny */
+.products-wrapper {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Tekst ładowania */
+.loading-text {
+  text-align: center;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+/* GRID kart (kafelki obok siebie) */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+/* Karta produktu */
+.product-card {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding: 30px;
-  max-width: 1000px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1; 
-}
-
-.product-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(17, 24, 39, 0.06);
   border-radius: 16px;
-  padding: 20px 25px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(10, 20, 30, 0.06);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  backdrop-filter: blur(6px);
 }
 
-.product-row:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(10, 20, 30, 0.10);
+  border-color: rgba(17, 24, 39, 0.1);
 }
 
-.product-left {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.product-thumb {
-  width: 90px;
-  height: 90px;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.product-details h3 {
-  margin: 0;
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: #1b1b1b;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
-  letter-spacing: 0.5px;
-}
-
-.product-details p {
-  margin-top: 8px;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #2e4f7d;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-}
-
-.add-to-list-btn {
-  padding: 12px 18px;
-  background: linear-gradient(to right, #5c76ae, #7dc7ef);
-  color: white;
-  font-weight: 600;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 8px rgba(32, 51, 74, 0.3);
-}
-
-.add-to-list-btn:hover {
-  background: linear-gradient(to right, #1a3e69, #376c89);
-  transform: scale(1.05);
-}
-
-.shop-title {
-  text-align: center;
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin: 20px 0 10px;
-  color: #0e2431;
+/* Media (zdjęcie) */
+.product-media {
   position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;              /* kwadrat jak na inspiracji */
+  background: linear-gradient(180deg, #f7fafc 0%, #edf2f7 100%);
 }
 
-.shop-title::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -8px;
-  height: 4px;
-  width: 60px;
-  background: linear-gradient(to right, #0e2431, #406a82);
-  border-radius: 2px;
+.product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.product-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+/* Placeholder gdy brak zdjęcia */
+.product-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #6b7280;
+  font-size: 0.9rem;
 }
 
+/* Treść karty */
+.product-body {
+  padding: 12px 14px 0 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.product-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.2;
+  max-height: 2.4em;              /* dwie linie */
+  overflow: hidden;
+}
+
+.product-price {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #222121;
+}
+
+/* Stopka karty: ilość + przycisk */
+.product-footer {
+  margin-top: auto;
+  padding: 12px 14px 14px 14px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+/* Licznik (zachowany, ale odświeżony) */
 .inline-quantity {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(4px);
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(17, 24, 39, 0.06);
   padding: 6px 10px;
   border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  transition: background 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .inline-quantity button {
-  background: linear-gradient(to right, #5c76ae, #7dc7ef);
-  color: white;
+  background: linear-gradient(90deg, #252729, #4b4b4b);
+  color: #fff;
   border: none;
-  padding: 4px 10px;
-  font-size: 0.7rem;
-  font-weight: 600;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.1s ease;
-  box-shadow: 0 2px 6px rgba(32, 51, 74, 0.2);
+  transition: transform 80ms ease, filter 160ms ease;
 }
 
 .inline-quantity button:hover {
-  background: linear-gradient(to right, #1a3e69, #376c89);
-  transform: scale(1.05);
+  filter: brightness(0.9);
+  transform: translateY(-1px);
 }
 
 .inline-quantity span {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1b1b1b;
-  min-width: 24px;
+  min-width: 28px;
   text-align: center;
+  font-weight: 700;
+  color: #111827;
 }
 
+/* Przycisk „Dodaj do listy” (pełna szerokość) */
+.add-to-list-btn {
+  width: 100%;
+  padding: 10px 14px;
+  background: linear-gradient(90deg, #282929, #313131);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  box-shadow: 0 3px 10px rgba(32, 51, 74, 0.26);
+  transition: transform 120ms ease, filter 160ms ease, box-shadow 160ms ease;
+}
+
+.add-to-list-btn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(24, 26, 27, 0.28);
+}
+
+.shop-header {
+  text-align: center;
+  margin: 32px 0 24px;
+}
+
+.shop-title {
+  font-size: clamp(3rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #0e121a;   
+  margin: 0;
+}
+
+.shop-subtitle {
+  margin-top: 6px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #252627;  
+}
+
+
+/* Responsywka – gęstsza siatka na większych ekranach */
+@media (min-width: 640px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}

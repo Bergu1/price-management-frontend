@@ -1,0 +1,301 @@
+/* ===========================
+   HOME / LANDING PAGE STYLES
+   =========================== */
+
+/* Layout bazowy strony */
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* -------- HERO -------- */
+.hero {
+  background:
+    radial-gradient(1200px 600px at 8% -10%, #ffffffa6, transparent),
+    radial-gradient(1200px 600px at 110% 8%, #ffffffa6, transparent);
+  padding: 3.5rem 1.25rem;
+}
+.hero__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+}
+@media (max-width: 900px) {
+  .hero__inner { grid-template-columns: 1fr; }
+}
+
+/* Kopia hero */
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: .08em;
+  padding: .35rem .6rem;
+  border-radius: 999px;
+  background: #0e121a;
+  color: #fff;
+  margin-bottom: .75rem;
+}
+.hero__copy h1 {
+  margin: 0 0 .5rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+.hero__copy p {
+  margin: 0 0 1rem;
+  max-width: 56ch;
+  opacity: .9;
+}
+.hero__cta {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+  margin-top: .5rem;
+}
+
+/* Karta z odliczaniem – delikatny gradient + miękki cień */
+.hero__card {
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
+  border-radius: 20px;
+  border: 1px solid #525050;
+  box-shadow: 0 12px 35px rgba(0.5, 2, 4, 0.7);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 380px;
+  margin-left: auto; /* trzyma po prawej na desktopie */
+}
+.hero__card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25rem;
+}
+.hero__card-top span {
+  font-size: .85rem;
+  opacity: .8;
+}
+.countdown {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #302f2f;
+  letter-spacing: .02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Perks w hero: pojedynczy „ptaszek” z CSS (nie w tekście) */
+.hero__perks { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .5rem; }
+.hero__perks li { display: flex; align-items: center; gap: .5rem; font-size: .95rem; }
+.hero__perks li::before { content: "✔"; color: #22c55e; font-weight: 700; }
+
+/* (Opcjonalny wariant glassmorphism – zamień blok .hero__card na ten)
+.hero__card {
+  background: rgba(255,255,255,.45);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.5);
+  box-shadow: 0 20px 50px rgba(0,0,0,.12);
+  padding: 1.5rem;
+  display:flex; flex-direction:column; gap:1rem; max-width:380px; margin-left:auto;
+}
+*/
+
+/* -------- PROMOCJE -------- */
+.promos {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 900px) { .promos { grid-template-columns: 1fr; } }
+.promo {
+  border-radius: 14px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+}
+.promo h3 { margin: 0 0 .25rem; }
+.promo p  { margin: 0; opacity: .9; }
+.promo--blue {
+  background: linear-gradient(135deg, #dbeafe, #93c5fd); /* jasny błękit → nasycony niebieski */
+}
+
+.promo--green {
+  background: linear-gradient(135deg, #dcfce7, #86efac); /* mięta → soczysta zieleń pastelowa */
+}
+
+.promo--yellow {
+  background: linear-gradient(135deg, #fef3c7, #fcd34d); /* kremowy → złoto-musztardowy */
+}
+
+.link {
+  text-decoration: none;
+  font-weight: 700;
+  color: #0f172a;
+  opacity: .75;
+}
+.link:hover { opacity: 1; }
+
+/* -------- SZYBKIE KATEGORIE -------- */
+.quickcats {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 900px) { .quickcats { grid-template-columns: repeat(2, 1fr); } }
+.qcat {
+  display: inline-block;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: .75rem 1rem;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,.05);
+  text-decoration: none;
+  color: #0f172a;
+  font-weight: 600;
+}
+.qcat:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.10);
+}
+
+/* -------- NAGŁÓWKI SEKCJI -------- */
+.section-head {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.section-head h2 { margin: 0; font-size: clamp(1.4rem, 2.5vw, 2rem); }
+.section-sub { opacity: .7; }
+
+/* Siatka kart w „Oferty dnia” (używa też Twoich klas z listy produktów) */
+.product-list--tight { gap: 1.25rem; }
+
+/* -------- PROMOCYJNE CENY -------- */
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: .6rem;
+  margin: .35rem 0 .75rem;
+}
+.price-old {
+  text-decoration: line-through;
+  opacity: .6;
+}
+.price-new {
+  font-weight: 900;
+  font-size: 1.15rem;
+}
+.price-off {
+  background: #22c55e;
+  color: #fff;
+  font-weight: 800;
+  padding: .1rem .4rem;
+  border-radius: 6px;
+  font-size: .75rem;
+}
+
+/* Badge PROMOCJA na karcie */
+.product-card { position: relative; }
+.badge--deal {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: 10px;
+  background: #dc2626;
+  color: #fff;
+  font-weight: 800;
+  padding: .25rem .5rem;
+  border-radius: 999px;
+  font-size: .75rem;
+  box-shadow: 0 6px 16px rgba(220,38,38,.35);
+}
+
+/* -------- PRZYCISKI (uniwersalne) -------- */
+.btn {
+  border: 1px solid transparent;
+  background: #ffffff;
+  color: #111827;
+  padding: .7rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+}
+.btn--ghost {
+  background: transparent;
+  border-color: #0a0a0a;
+  color: #020202;
+}
+.btn--ghost:hover {
+  background: #e0f2fe;
+}
+.btn--primary {
+  background: #0a0a0a;
+  color: #fff;
+}
+.btn--primary:hover {
+  filter: brightness(1.05);
+}
+.btn--small {
+  padding: .55rem .8rem;
+  border-radius: 10px;
+}
+
+/* Akcje na kartach */
+.card-actions {
+  display: flex;
+  gap: .5rem;
+  margin-top: .75rem;
+}
+
+/* -------- MINI STOPKA -------- */
+.mini-footer {
+  max-width: 1200px;
+  margin: 1rem auto 3rem;
+  padding: 0 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: .75;
+}
+.mini-footer a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+}
+.mini-footer a:hover { text-decoration: underline; }
+
+/* Dopieszczenie obrazków (gdy productsList.css nie nadaje stylów) */
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}

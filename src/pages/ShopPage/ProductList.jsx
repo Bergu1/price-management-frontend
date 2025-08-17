@@ -5,6 +5,8 @@ import AlertMessage from '../AlertMessage/AlertMessage';
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:8000/api/products/product_view/')
@@ -12,16 +14,11 @@ export default function ProductList() {
       .then((data) => {
         setProducts(data);
         const initialQuantities = {};
-        data.forEach((product) => {
-          initialQuantities[product.id] = 1;
-        });
+        data.forEach((p) => (initialQuantities[p.id] = 1));
         setQuantities(initialQuantities);
       })
       .catch((err) => console.error('Error while loading product:', err));
   }, []);
-
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState('');
 
   const showMessage = (text, type = 'success') => {
     setMessage(text);
@@ -42,12 +39,9 @@ export default function ProductList() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Token ' + localStorage.getItem('token'),
+        Authorization: 'Token ' + localStorage.getItem('token'),
       },
-      body: JSON.stringify({
-        product: productId,   
-        quantity: quantity,
-      }),
+      body: JSON.stringify({ product: productId, quantity }),
     })
       .then((res) => {
         if (!res.ok) throw new Error('Request failed');
@@ -55,59 +49,86 @@ export default function ProductList() {
       })
       .then((data) => {
         console.log('Product added to shopping list:', data);
-        showMessage(`Added ${quantity} × to shopping list!`, 'success');
+        showMessage(`Dodano ${quantity} × do listy zakupów!`, 'success');
       })
       .catch((err) => {
         console.error('Error:', err);
-        showMessage('Failed to add product to shopping list.', 'error');
+        showMessage('Nie udało się dodać produktu do listy.', 'error');
       });
   };
 
-
   return (
-    <div>
-    <div className="mb-4">
+    <div className="products-wrapper">
       {message && (
-        <AlertMessage
-          message={message}
-          type={messageType}
-          onClose={() => setMessage('')}
-        />
+        <div className="mb-4">
+          <AlertMessage
+            message={message}
+            type={messageType}
+            onClose={() => setMessage('')}
+          />
+        </div>
       )}
-    </div>
-    <div className="product-list-rows">
+
       {products.length === 0 ? (
-        <p>Loading products...</p>
+        <p className="loading-text">Ładowanie produktów…</p>
       ) : (
-        products.map((product) => (
-          <div className="product-row" key={product.id}>
-            <div className="product-left">
-              {product.picture && (
-                <img
-                  className="product-thumb"
-                  src={product.picture}
-                  alt={product.name}
-                />
-              )}
-              <div className="product-details">
-                <h3>{product.name}</h3>
-                <p>{product.price1} PLN</p>
+        <div className="product-grid">
+          {products.map((product) => (
+            <div className="product-card" key={product.id}>
+              <div className="product-media">
+                {product.picture ? (
+                  <img
+                    src={product.picture}
+                    alt={product.name}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="product-placeholder" aria-hidden="true">
+                    {/* ikona/placeholder */}
+                    <span>Brak zdjęcia</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="product-body">
+                <h3 className="product-title" title={product.name}>
+                  {product.name}
+                </h3>
+                <div className="product-price">
+                  {Number(product.price1).toFixed(2)} PLN
+                </div>
+              </div>
+
+              <div className="product-footer">
+                <div className="inline-quantity">
+                  <button
+                    type="button"
+                    onClick={() => handleQuantityChange(product.id, -1)}
+                    aria-label="Zmniejsz ilość"
+                  >
+                    −
+                  </button>
+                  <span>{quantities[product.id] || 1}</span>
+                  <button
+                    type="button"
+                    onClick={() => handleQuantityChange(product.id, 1)}
+                    aria-label="Zwiększ ilość"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <button
+                  className="add-to-list-btn"
+                  onClick={() => handleAddToShoppingList(product.id)}
+                >
+                  Dodaj do listy
+                </button>
               </div>
             </div>
-
-          <div className="product-actions">
-            <div className="inline-quantity">
-              <button onClick={() => handleQuantityChange(product.id, -1)}>-</button>
-              <span>{quantities[product.id] || 1}</span>
-              <button onClick={() => handleQuantityChange(product.id, 1)}>+</button>
-            </div>
-            <button className="add-to-list-btn" onClick={() => handleAddToShoppingList(product.id)}>Add to Shopping List</button>
-          </div>
-
-          </div>
-        ))
+          ))}
+        </div>
       )}
-    </div>
     </div>
   );
 }

@@ -1,81 +1,74 @@
-.shopping-list {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 30px;
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(6px);
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
+:root{--bg1:#eef6ff;--bg2:#e7ecff;--card:#ffffff;--ink:#0f172a;--muted:#55607a;--line:#e5e7eb;--pri:#4f46e5;--pri-ink:#fff;--ok:#10b981;--danger:#ef4444}
+*{box-sizing:border-box} html,body,#root{height:100%}
+body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--bg1),var(--bg2))}
+.btnSL{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:14px;padding:.55rem .9rem;font-weight:600;cursor:pointer;transition:.2s}
+.btnSL:hover{background:#f8fafc}
+.btnSL.primary{background: linear-gradient(90deg, #282929, #313131);;color:var(--pri-ink);border-color:transparent}
+.btnSL.primary:hover{filter:brightness(.95)}
+.btnSL.ghost{background:transparent}
+.btnSL.danger{border-color:#fecaca;color:var(--danger);background:#fff5f5}
 
-.shopping-list h2 {
-  margin-bottom: 20px;
-  font-size: 2rem;
-  text-align: center;
-  color: #1a3e69;
-}
+.page{min-height:100%;display:flex;flex-direction:column}
 
-.shopping-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-}
-
-.shopping-thumb {
-  width: 70px;
-  height: 70px;
-  border-radius: 10px;
-  object-fit: cover;
-  margin-right: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-.shopping-info h4 {
+.shopping-header {
+  font-size: clamp(3rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #0e121a;   
   margin: 0;
-  font-size: 1.2rem;
-  font-weight: 700;
+  position: center;
+  text-align: center;
+  margin: 32px 0 24px;
 }
 
-.shopping-info p {
-  margin: 4px 0;
-  font-size: 1rem;
-  color: #444;
+.shopping-header strong {
+  margin-left: 8px;
 }
 
-.shopping-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-left: auto; 
+.pills{display:flex;gap:8px}
+.pill{border:1px solid var(--line);background:#fff;padding:.35rem .7rem;border-radius:999px;font-size:.9rem;cursor:pointer}
+.pill.active{background:var(--pri);color:#fff;border-color:transparent}
+
+.main{max-width:1450px;margin:0 auto;padding:28px 18px;display:grid;gap:22px;grid-template-columns:1.7fr .9fr}
+@media (max-width: 920px){.main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);box-shadow:0 6px 24px rgba(15,23,42,.06);border-radius:22px}
+.card.pad{padding:18px}
+
+.item{display:flex;gap:14px;align-items:center;padding:14px}
+.item+.item{border-top:1px dashed var(--line)}
+.item img{width:72px;height:72px;object-fit:cover;border-radius:14px;background:#f6f7fb}
+.item-title{font-weight:700}
+.item-sub{color:var(--muted);font-size:.85rem}
+.item-actions{display:flex;gap:10px;align-items:center;margin-top:8px}
+
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.qty button{width:34px;height:34px;background:#fff;border:0;border-right:1px solid var(--line);cursor:pointer}
+.qty span{min-width:40px;text-align:center}
+.qty button:last-child{border-right:0;border-left:1px solid var(--line)}
+
+.summary-row{display:flex;justify-content:space-between;padding:6px 0}
+.total{font-weight:800;font-size:1.25rem}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.badgeSL{display:inline-flex;gap:8px;align-items:center;padding:.35rem .6rem;background:#eef2ff;border:1px solid #e0e7ff;border-radius:12px;font-size:.8rem}
+
+/* Skreślenie i lekkie wyszarzenie pozycji kupionych */
+.item.purchased {
+  opacity: .75;
 }
 
-.purchase-btn,
-.remove-btn {
-  padding: 5px 5px;
-  background-color: #e8ecf4;
-  color: #1a3e69;
-  border: 2px solid #b0bfd8;
+.item.purchased .item-title,
+.item.purchased .item-sub {
+  text-decoration: line-through;
 }
 
-.purchase-btn:hover,
-.remove-btn:hover {
-  background-color: #d9e2f1;
-  color: #0e2c4e;
+/* (opcjonalnie) obrazek na szaro, żeby było widać status */
+.item.purchased img {
+  filter: grayscale(100%);
+  opacity: .8;
 }
 
-.purchase-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-
-.shopping-item.purchased {
-  opacity: 0.5;
-}
-
-.shopping-item.purchased .shopping-info h4,
-.shopping-item.purchased .shopping-info p {
+/* (opcjonalnie) suma/prices też przekreślone */
+.item.purchased .item-title + div .item-title,
+.item.purchased .item-title + div .item-sub {
   text-decoration: line-through;
 }

@@ -4,16 +4,20 @@
   gap: 2rem;
   justify-content: center;
   padding: 2rem;
-
+  align-items: stretch; /* wszystkie karty jednakowej wysokości */
 }
 
 .product-card {
   width: 280px;
-  background: #e4f7ff;
+  background: hsl(232, 100%, 95%);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   transition: transform 0.3s ease;
+  
+  /* ważne: karta jako kolumna */
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card:hover {
@@ -27,10 +31,32 @@
   border-bottom: 1px solid #eee;
 }
 
+/* treść karty wypełnia wysokość */
 .product-info {
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  flex: 1; /* rośnie */
 }
 
+/* tytuł max 2 linie żeby nie rozpychał */
 .product-info h3 {
-  margin-bottom: 0.5rem;
+  min-height: 2.6em;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* przyciski doklejone do dołu */
+.card-actions {
+  margin-top: auto;
+  display: flex;
+  gap: .5rem;
+}
+
+/* oba przyciski równej szerokości */
+.card-actions .btn {
+  flex: 1;
 }

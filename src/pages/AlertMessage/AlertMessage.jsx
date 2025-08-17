@@ -4,7 +4,7 @@ import './styles/AlertMessage.css'
 export default function AlertMessage({ message, type, onClose }) {
   useEffect(() => {
     if (message) {
-      const timer = setTimeout(onClose, 2000);
+      const timer = setTimeout(onClose, 1000);
       return () => clearTimeout(timer);
     }
   }, [message, onClose]);
