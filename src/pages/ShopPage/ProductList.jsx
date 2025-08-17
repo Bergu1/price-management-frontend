@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './styles/productsList.css';
-import AlertMessage from '../AlertMessage/AlertMessage';
+import AlertMessage from '../../components/AlertMessage/AlertMessage';
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ProductList from './ProductsList';
-import './styles/navbar.css'
-import './styles/productsList.css'
-import Navbar from './Navbar'
+import '../../../components/Navbar/navbar.css'
+import '../styles/productsListHomePage.css';
+import ProductList from '../ProductsListHomePage';
+import Navbar from '../../../components/Navbar/Navbar';
 
-export default function GuestHome() {
+export default function CustomerHome({ username }) {
   const token = localStorage.getItem('token');
   const isEmployee = localStorage.getItem('isEmployee') === 'true';
   return (

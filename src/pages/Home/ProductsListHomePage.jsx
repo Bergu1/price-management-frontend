@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/home.css";
-import "./styles/productsList.css"; // jeśli masz – reuse styli kart
+import "./styles/productsListHomePage.css";
 
 export default function HomePage() {
   const navigate = useNavigate();

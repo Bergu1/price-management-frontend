@@ -1,8 +1,8 @@
 /* ========================= ShoppingList.jsx ========================= */
 // Wklej ten komponent do src/pages/ShoppingList.jsx i zaimportuj powyższy CSS plikowo.
 import React, { useEffect, useMemo, useState } from 'react';
-import Navbar from '../Home/Navbar';
-import AlertMessage from '../AlertMessage/AlertMessage';
+import Navbar from '../../components/Navbar/Navbar';
+import AlertMessage from '../../components/AlertMessage/AlertMessage';
 import './styles/shoppingList.css';
 
 export default function ShoppingList(){

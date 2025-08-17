@@ -1,7 +1,7 @@
 import React from 'react';
-import GuestHome from './GuestHome';
-import CustomerHome from './CustomerHome';
-import EmployeeHome from './EmployeeHome';
+import GuestHome from './UsersAccounts/GuestHome';
+import CustomerHome from './UsersAccounts/CustomerHome';
+import EmployeeHome from './UsersAccounts/EmployeeHome';
 
 export default function Home() {
   const token = localStorage.getItem('token');

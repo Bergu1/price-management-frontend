@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import AlertMessage from '../../AlertMessage/AlertMessage';
+import AlertMessage from '../../../components/AlertMessage/AlertMessage';
 import '../styles/loginContainer.css'
-import '../styles/InputFields.css'
-import '../styles/Button.css'
-import '../styles/checkBox.css'
+import '../../../components/inputFields.css'
+import '../../../components/button.css'
+import '../../../components/checkBox.css'
 
 export default function Login() {
     const navigate = useNavigate();

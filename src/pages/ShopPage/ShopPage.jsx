@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductList from './ProductList';
-import Navbar from '../Home/Navbar';
+import Navbar from '../../components/Navbar/Navbar';
 import './styles/productsList.css';
 
 export default function ShopPage() {
