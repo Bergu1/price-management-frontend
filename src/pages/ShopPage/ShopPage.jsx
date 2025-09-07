@@ -5,7 +5,7 @@ import './styles/productsList.css';
 
 export default function ShopPage() {
   const token = localStorage.getItem('token');
-  const isEmployee = localStorage.getItem('isEmployee') === 'true';
+  const isEmployee = localStorage.getItem('is_employee') === 'true';
 
   return (
     <div>

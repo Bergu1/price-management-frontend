@@ -1,16 +1,18 @@
 import React from 'react';
-import GuestHome from './UsersAccounts/GuestHome';
-import CustomerHome from './UsersAccounts/CustomerHome';
-import EmployeeHome from './UsersAccounts/EmployeeHome';
+import Navbar from '../../components/Navbar/Navbar';
+import ProductList from './ProductsListHomePage';
+import '../../components/Navbar/navbar.css';
+import './styles/productsListHomePage.css';
 
 export default function Home() {
   const token = localStorage.getItem('token');
-  const isEmployee = localStorage.getItem('is_employee') === 'true';
+  const isEmployee = JSON.parse(localStorage.getItem('is_employee') || 'false');
   const username = localStorage.getItem('username');
 
-  if (!token) return <GuestHome />;
-
-  return isEmployee
-    ? <EmployeeHome username={username} />
-    : <CustomerHome username={username} />;
+  return (
+    <div>
+      <Navbar token={token} isEmployee={isEmployee} />
+      <ProductList />
+    </div>
+  );
 }

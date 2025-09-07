@@ -3,13 +3,20 @@ import Login from './pages/LoginRegister/Login/Login';
 import Register from './pages/LoginRegister/Register/Register';
 import Home from './pages/Home/Home';
 import ShopPage from './pages/ShopPage/ShopPage';
-import PrivateRoute from './PrivateRoute';
+
 import ShoppingList from './pages/ShoppingList/shoppingList';
+import Panel from "./pages/Panel";
+
+import AddProduct from "./pages/Panel/components/AddProduct";
+
+import PrivateRoute from './routes/PrivateRoute';
+import PrivateEmployeeRoute from "./routes/PrivateEmployeeRoute";
 
 
 export default function App() {
     return (
         <BrowserRouter>
+
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -22,8 +29,34 @@ export default function App() {
                     </PrivateRoute>
                     }
                 />
-                <Route path="/shopping-list" element={<ShoppingList />} />
+
+                <Route 
+                    path="/shopping-list" 
+                    element={
+                    <PrivateRoute>
+                        <ShoppingList />
+                    </PrivateRoute>
+                    }
+                />
+
+                <Route
+                    path="/panel"
+                    element={
+                        <PrivateEmployeeRoute>
+                        <Panel />
+                        </PrivateEmployeeRoute>
+                    }
+                />
+                <Route
+                    path="/panel/add"
+                    element={
+                    <PrivateEmployeeRoute>
+                        <AddProduct />
+                    </PrivateEmployeeRoute>
+                    }
+                />
             </Routes>
+
         </BrowserRouter>
     )
 }

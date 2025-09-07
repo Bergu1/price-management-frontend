@@ -10,7 +10,7 @@ export default function ShoppingList(){
   const [purchased, setPurchased] = useState([]);   // id-ki odhaczonych (klientowo)
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('token');
-  const isEmployee = localStorage.getItem('isEmployee') === 'true';
+  const isEmployee = localStorage.getItem('is_employee') === 'true';
 
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('success');
