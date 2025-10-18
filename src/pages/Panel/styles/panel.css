@@ -1,8 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-/* ====== NAMESPACE: wszystko działa tylko wewnątrz .pm ====== */
+/* ====== NAMESPACE ====== */
 .pm{
-  /* Kolory i tokeny */
   --panel:#ffffff;
   --border:#e6eaf2;
   --text:#0f172a;
@@ -18,28 +17,37 @@
 
   font-family:"Poppins",system-ui,sans-serif;
   color:var(--text);
-
-  /* tło panelu (nie dotyka globalnego body) */
-  background: linear-gradient(
-    120deg,
-    #f5f5f5 0%,
-    #d9d9d9 35%,
-    #bfbfbf 70%,
-    #a6a6a6 100%
-  );
+  background: linear-gradient(120deg,#f5f5f5 0%,#d9d9d9 35%,#bfbfbf 70%,#a6a6a6 100%);
 }
 
-/* ====== Layout ====== */
-.pm-container{
-  width:100%;
-  max-width:1400px;
-  margin:0 auto;
-  padding:24px clamp(12px,4vw,48px);
+/* ====== Tytuł NAD toolbarem (fixed) ====== */
+/* Jeśli masz globalny top-nav ~56–64px wysokości, ustaw tu enter top */
+.pm-titlebar{
+  position: fixed;
+  left: 0; right: 0;
+  top: 72px;              /* <<< W RAZIE POTRZEBY ZMIEN NA WYSOKOSC TWOJEGO NAVBARU */
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  pointer-events: none;   /* nie blokuje kliknięć w toolbar pod spodem */
+}
+.pm-titlebar h1{
+  pointer-events: auto;
+  margin: 0;
+  padding: 8px 16px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #0f172a;
+  text-align: center;
+  background: transparent;
 }
 
+/* Odsuń toolbar w dół, żeby nie kolidował z tytułem.
+   Jeśli Twój toolbar ma inną klasę, możesz tu dodać dodatkowy selektor. */
 .pm-toolbar{
-  position:sticky;
-  top:8px;
+  position: sticky;
+  top: 8px;
   z-index:10;
   display:flex;
   gap:12px;
@@ -50,10 +58,20 @@
   border:1px solid var(--border);
   border-radius:var(--radius);
   box-shadow:var(--shadow);
+
+  /* DODANE: stały margines pod pasek tytułu */
+  margin-top: 56px;       /* dostosuj do .pm-titlebar top + wysokość h1 */
 }
 
-/* ====== Kontrolki (formularze, toolbar) ====== */
-/* Wspólna baza */
+/* ====== Layout kontenera ====== */
+.pm-container{
+  width:100%;
+  max-width:100%;
+  margin:0 auto;
+  padding:24px clamp(12px,4vw,48px);
+}
+
+/* ====== Kontrolki ====== */
 .pm-input{
   width:100%;
   min-width:0;
@@ -66,200 +84,94 @@
   box-sizing:border-box;
   transition: box-shadow .15s ease, border-color .15s ease, background-color .15s ease;
 }
-
-/* Wysokość tylko dla input/select */
 .pm input.pm-input,
-.pm select.pm-input{
-  height:42px;
-}
+.pm select.pm-input{ height:42px; }
+.pm textarea.pm-input{ min-height:120px; line-height:1.5; padding:12px 14px; resize:vertical; }
 
-/* Tekstarea ma swoje wymiary – naprawia „kursor przy górze” */
-.pm textarea.pm-input{
-  min-height:120px;
-  line-height:1.5;
-  padding:12px 14px;
-  resize:vertical;
-}
-
-/* Focus ring */
 .pm .pm-input:focus,
 .pm .pm-control:focus{
   border-color: var(--brand);
   box-shadow: 0 0 0 3px rgba(0,0,0,.08);
 }
 
-/* Przyciski */
+/* ====== Przyciski ====== */
 .pm-btn{
-  height:42px;
-  padding:0 14px;
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:600;
-  transition:.2s ease;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  text-decoration:none;
-  color:var(--text);
-  white-space:nowrap;
+  height:42px; padding:0 14px; border:1px solid var(--border);
+  background:#fff; border-radius:12px; cursor:pointer; font-weight:600;
+  transition:.2s ease; display:inline-flex; align-items:center; gap:8px; text-decoration:none; color:var(--text); white-space:nowrap;
 }
 .pm-btn:hover{ background:#f8fafc; }
 .pm-btn:disabled{ opacity:.6; cursor:not-allowed; }
-
-.pm-btn.primary{
-  background:var(--brand);
-  border-color:var(--brand);
-  color:#fff;
-}
+.pm-btn.primary{ background:var(--brand); border-color:var(--brand); color:#fff; }
 .pm-btn.primary:hover{ background:var(--brand-600); }
-
 .pm-btn.ghost{ background:transparent; }
 .pm-btn.danger{ border-color:var(--danger); color:var(--danger); }
 .pm-btn.ok{ border-color:var(--ok); color:var(--ok); }
 .pm-btn.sm{ height:32px; padding:0 10px; border-radius:10px; font-weight:600; }
 
 /* ====== Karty ====== */
-.pm-card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  margin-top:18px;
-}
-
-.pm-card-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px 18px;
-  border-bottom:1px solid var(--border);
-}
+.pm-card{ background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); margin-top:18px; }
+.pm-card-header{ display:flex; justify-content:space-between; align-items:center; padding:16px 18px; border-bottom:1px solid var(--border); }
 .pm-card-title{ font-weight:600; }
 
 /* ====== Tabela ====== */
 .pm-table-wrap{ width:100%; overflow-x:auto; }
-
-.pm-table{
-  width:100%;
-  border-collapse:collapse;
-  /* auto → nagłówki nie utną się przy ciasnej szerokości */
-  table-layout:auto;
-}
-
+.pm-table{ width:100%; border-collapse:collapse; table-layout:auto; }
 .pm-table thead th{
-  position:sticky;
-  top:0;
-  z-index:5;
-  background:#fff;
-  border-bottom:1px solid var(--border);
-  text-align:left;
-  padding:12px 10px;
-  font-weight:600;
-  color:var(--muted);
-  white-space:nowrap;
+  position:sticky; top:0; z-index:5; background:#fff; border-bottom:1px solid var(--border);
+  text-align:left; padding:12px 10px; font-weight:600; color:var(--muted); white-space:nowrap;
 }
+.pm-table tbody td{ border-bottom:1px solid #f1f4f9; padding:12px 10px; vertical-align:middle; }
+.pm-table tr:hover td{ background:#f7f7f7; }
 
-.pm-table tbody td{
-  border-bottom:1px solid #f1f4f9;
-  padding:12px 10px;
-  vertical-align:middle;
-}
-
-.pm-table tr:hover td{ background:#f1efef; }
-
-/* Kolumny (minimalne/sensowne szerokości) */
+/* Kolumny */
 .pm-col-thumb{ width:56px; }
 .pm-col-id{ width:64px; }
 .pm-col-name{ min-width:260px; }
-.pm-col-price{ width:220px; }
-.pm-col-change{ min-width:300px; }
+.pm-col-price{ width:200px; }
+.pm-col-change{ min-width:280px; }
 .pm-col-country{ min-width:180px; }
-.pm-col-avail{ width:140px; }
 .pm-col-actions{ width:180px; }
+.pm-col-avail{ width:210px; text-align:center; }
+.pm-col-shelf{ width:160px; }
 
 /* Elementy wiersza */
-.pm-thumb{
-  width:44px; height:44px;
-  border-radius:12px; overflow:hidden;
-  border:1px solid var(--border);
-  background:#f6f7fb;
-  display:grid; place-items:center;
-}
+.pm-thumb{ width:44px; height:44px; border-radius:12px; overflow:hidden; border:1px solid var(--border); background:#f6f7fb; display:grid; place-items:center; }
 .pm-thumb img{ width:100%; height:100%; object-fit:cover; }
 .pm-thumb-placeholder{ font-size:10px; color:var(--muted); }
 
-.pm-control{
-  width:100%;
-  height:38px;
-  padding:0 12px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  outline:none;
-  background:#fff;
-  font-size:14px;
-  transition: box-shadow .15s ease, border-color .15s ease;
-}
+.pm-control{ width:100%; height:38px; padding:0 12px; border:1px solid var(--border); border-radius:10px; outline:none; background:#fff; font-size:14px; transition: box-shadow .15s ease, border-color .15s ease; }
 .pm-control.sm{ height:32px; }
 
 .pm-price-cell{ display:flex; gap:8px; align-items:center; }
 .pm-price-prefix{ font-weight:600; color:var(--muted); }
 
-.pm-change-wrap{
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  gap:8px;
-  align-items:center;
-}
+.pm-change-wrap{ display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center; }
 
-.pm-segment{
-  display:inline-flex;
-  border:1px solid var(--border);
-  border-radius:10px;
-  overflow:hidden;
-  background:#fff;
-}
-.pm-segment button{
-  border:none;
-  background:transparent;
-  padding:6px 10px;
-  cursor:pointer;
-  font-weight:600;
-  color:var(--muted);
-}
-.pm-segment button.active{
-  background:var(--accent);
-  color:var(--brand);
-}
+.pm-segment{ display:inline-flex; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#fff; }
+.pm-segment button{ border:none; background:transparent; padding:6px 10px; cursor:pointer; font-weight:600; color:var(--muted); }
+.pm-segment button.active{ background:var(--accent); color:var(--brand); }
 
-.pm-badge{
-  padding:4px 8px;
-  border-radius:999px;
-  background:#eef2ff;
-  color:var(--brand);
-  font-weight:600;
-  font-size:12px;
-}
+/* ====== Badge ====== */
+.pm-badge{ padding:8px 14px; border-radius:999px; font-weight:700; font-size:13px; letter-spacing:.2px; min-width:170px; display:inline-flex; justify-content:center; align-items:center; border:1px solid transparent; }
+.pm-badge.ok{  background:#d1fae5; color:#065f46; border-color:#34d399; }
+.pm-badge.warn{ background:#fef3c7; color:#92400e; border-color:#fcd34d; }
+.pm-badge.bad{  background:#fee2e2; color:#991b1b; border-color:#fca5a5; }
 
+/* ====== Select półki ====== */
+.pm-select-shelf{ min-width:150px; width:100%; height:38px; padding:0 12px; border:1px solid var(--border); border-radius:10px; background:#fff; font-size:14px; appearance:auto; }
+
+/* Akcje w wierszu */
 .pm-row-actions{ display:flex; gap:8px; }
 
+/* Teksty pomocnicze */
 .pm-muted{ color:var(--muted); }
 
 /* ====== Formularze (Add Product) ====== */
-.pm-form-grid{
-  display:grid;
-  gap:12px;
-  grid-template-columns:1fr;
-}
+.pm-form-grid{ display:grid; gap:12px; grid-template-columns:1fr; }
 .pm-field{ display:grid; gap:6px; }
 .pm-field > span{ font-weight:600; color:var(--muted); }
-
-.pm-actions-right{
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-}
+.pm-actions-right{ display:flex; justify-content:flex-end; gap:8px; }
 
 /* Placeholder (subtelniejszy) */
 .pm ::placeholder{ color:#a0a7b4; }
@@ -267,6 +179,5 @@
 /* ====== Responsywność ====== */
 @media (max-width:1200px){
   .pm-col-country{ display:none; }
-  .pm-col-avail{ display:none; }
-  .pm-col-change{ min-width:260px; }
+  .pm-col-change{ min-width:240px; }
 }
