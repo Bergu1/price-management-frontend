@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { patchProduct, deleteProduct } from "../api/products";
 import "../styles/panel.css";
+import { Link } from "react-router-dom";     
 
 /* -------------------- ustawienia -------------------- */
 const DEBUG = true;
@@ -41,7 +42,6 @@ const computeAvailability = (row) => {
 
     return { label: "Dostępny", cls: "ok", via: `waga ${w.toFixed(0)} g` };
   }
-
 
   if (shelf === 1 || shelf === 2) {
     const d = toNumber(shelf === 1 ? row?.d1_mm : row?.d2_mm);
@@ -291,6 +291,15 @@ export default function Panel() {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQuery(query.trim().toLowerCase()), 250);
+    return () => clearTimeout(t);
+  }, [query]);
+
   const tRef = useRef(null);
   const clear = () => { if (tRef.current) clearTimeout(tRef.current); };
 
@@ -324,22 +333,50 @@ export default function Panel() {
       document.removeEventListener("visibilitychange", onVis);
       clear();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refetch = () => { clear(); setLoading(true); load(); };
 
+  const filteredRows = rows.filter((r) => {
+    if (!debouncedQuery) return true;
+    const q = debouncedQuery;
+    const name = (r.name ?? "").toLowerCase();
+    const country = (r.country_of_origin ?? "").toLowerCase();
+    const id = String(r.id ?? "");
+    return name.includes(q) || country.includes(q) || id.includes(q);
+  });
+
   return (
     <>
-      {/* Pasek tytułu NAD wszystkim (fixed), nie zależy od DOM toolbara */}
+      {/* Pasek tytułu */}
       <div className="pm-titlebar">
         <h1>Panel pracownika</h1>
       </div>
 
-      {/* Reszta strony */}
-      <div className="pm-container">
-        {error && <div style={{ color: "crimson" }}>Błąd: {String(error)}</div>}
-        <ProductTable rows={rows} loading={loading} onUpdated={refetch} />
+      {/* Górny toolbar (TYLKO TU wyszukiwarka) */}
+      <div className="pm-container" style={{ marginBottom: 12 }}>
+        <div className="pm-toolbar" style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <input
+            className="pm-control"
+            placeholder="Szukaj po nazwie, kraju lub ID…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label="Wyszukaj produkt"
+            style={{ flex: "0 1 520px" }}
+          />
+          <button className="pm-btn">Szukaj</button>
+            <Link className="pm-btn primary" to="/panel/add">
+              Dodaj produkt
+            </Link>
+          {debouncedQuery && (
+            <span className="pm-muted" aria-live="polite">
+              Wyniki: <strong>{filteredRows.length}</strong>
+            </span>
+          )}
+        </div>
+
+        {/* Karta z tabelą */}
+        <ProductTable rows={filteredRows} loading={loading} onUpdated={refetch} />
       </div>
     </>
   );
